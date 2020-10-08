@@ -18,23 +18,23 @@ def plot_ts_scatter(df, s = 75, figsize = (40, 20), save_fig = False, pp = None)
             if x != y:
                 fig, ax = plt.subplots(figsize = figsize)
             
-            if "Year" not in df.keys():
-                df["Year"] = [int(str(ind)[:4]) for ind in df.index]
-                
-            df.plot.scatter(x = x, y = y, s = s, ax = ax, c = "Year", cmap = "plasma")
-                
-            ax.tick_params(axis = 'x', rotation =90)
-            ax.tick_params('both', length = 0, which = 'both')
-                
-            if save_fig:
-                try:
-                       os.mkdir("plots")
-                except:
-                    pass
-                
-                directory = "plots/" + x[:12] + " " + y[:12] + " c=Year"
-                plt.savefig(directory + ".png")
-                if pp != None: pp.savefig(fig, bbox_inches = "tight")
+                if "Year" not in df.keys():
+                    df["Year"] = [int(str(ind)[:4]) for ind in df.index]
+                    
+                df.plot.scatter(x = x, y = y, s = s, ax = ax, c = "Year", cmap = "plasma")
+                    
+                ax.tick_params(axis = 'x', rotation =90)
+                ax.tick_params('both', length = 0, which = 'both')
+                    
+                if save_fig:
+                    try:
+                           os.mkdir("plots")
+                    except:
+                        pass
+                    
+                    directory = "plots/" + x[:12] + " " + y[:12] + " c=Year"
+                    plt.savefig(directory + ".png")
+                    if pp != None: pp.savefig(fig, bbox_inches = "tight")
                 
 def plot_lines(df, linewidth = 1, figsize = (40,20), 
                legend = True, pp = None):
@@ -59,3 +59,11 @@ def plot_lines(df, linewidth = 1, figsize = (40,20),
     plt.savefig(filename[:50] + "line.png",
                bbox_inches = "tight")
     if pp != None: pp.savefig(fig, box_inches = "tight")
+    
+def plot_stacked_lines(df, plot_vars, linewidth = 1, figsize = (40,20), pp = None, total_var = False):
+    fig, ax = plt.subplots(figsize = figsize)
+    df[plot_vars.].plot.area(stacked = True, linewidth = linewidth, ax = ax)
+    
+    if total_var != False:
+        df[total_var].plot.line(linewidth = linewidth, ax = ax, c = 'k', label = total_var, ls = "--")
+    ax.legend(loc = 2, ncol = 2)
