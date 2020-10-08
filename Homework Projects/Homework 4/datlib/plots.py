@@ -62,7 +62,7 @@ def plot_lines(df, linewidth = 1, figsize = (40,20),
     
 def plot_stacked_lines(df, plot_vars, linewidth = 1, figsize = (40,20), pp = None, total_var = False):
     fig, ax = plt.subplots(figsize = figsize)
-    df[plot_vars.].plot.area(stacked = True, linewidth = linewidth, ax = ax)
+    df[plot_vars].plot.area(stacked = True, linewidth = linewidth, ax = ax)
     
     if total_var != False:
         df[total_var].plot.line(linewidth = linewidth, ax = ax, c = 'k', label = total_var, ls = "--")
